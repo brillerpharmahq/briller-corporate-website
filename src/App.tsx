@@ -19,7 +19,7 @@ import minyakHeroImg from './assets/images/minyak-nur-hero.png';
 import tmmHeroImg from './assets/images/tmm-hero.jpeg';
 import minyakProductImg from './assets/images/minyak-nur-product.jpg';
 import tmmProductImg from './assets/images/tmm-product.jpg';
-
+import aboutus from './assets/images/aboutus.jpg';
 const Navbar = () => {
   const [isScrolled, setIsScrolled] = useState(false);
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
@@ -314,7 +314,7 @@ const AboutUs = () => {
           >
             <div className="absolute inset-0 bg-brand-50 rounded-[3rem] transform -rotate-3 scale-105 -z-10"></div>
             <img 
-              src={minyakHeroImg}
+              src={aboutus}
               alt="About Briller" 
               className="w-full rounded-[3rem] shadow-xl object-cover aspect-[4/5]"
             />
@@ -339,17 +339,17 @@ const Testimonials = () => {
             {
               quote: "Alhamdulillah, sudah terima Minyak Nur. Minyak ni bagus, ada kesan selepas guna. Batuk dan kahak berkurangan. Sebelum ni beli dekat FB, ni kali kedua beli di Shopee, bagaus minyak ni dan akan repeat lagi nanti. Terima kasih.",
               author: "Sarah Ali.",
-              role: "Minyak Nur Aromaterapi buyer"
+              role: "Minyak Nur buyer | Shopee"
             },
             {
-              quote: "The transparency in their sourcing is what won me over. The fact that it works so incredibly well for my focus and energy is a massive bonus.",
-              author: "Michael T.",
-              role: "Fitness Coach"
+              quote: "Dah sampai minyak ni, alhamdulilah memang menjadi. Batuk berkahak dah takda, alhamdulillah",
+              author: "Wawa Nan.",
+              role: "Minyak Nur buyer | FB "
             },
             {
-              quote: "Finally, a health brand that prioritizes science over marketing hype. The Vitality Blend has become a non-negotiable part of my morning routine.",
-              author: "Dr. Emily R.",
-              role: "Naturopath"
+              quote: "ImmunoTiger ni dah bantu hilangkan rasa susah bernafas saya. Alhamdulillah, rasa lebih sihat lepas guna. Terima kasih seller",
+              author: "Muhammad Nasir",
+              role: "ImmunoTiger | FB"
             }
           ].map((testimonial, index) => (
             <motion.div 
@@ -394,9 +394,14 @@ const CTA = () => {
               Join the Briller community today and get 10% off your first order.
             </p>
             <div className="flex flex-col sm:flex-row justify-center gap-4">
-              <button className="bg-white text-brand-700 hover:bg-zinc-50 px-8 py-4 rounded-full text-lg font-bold transition-all shadow-xl">
+              <a 
+                href="https://linktr.ee/MinyakNur?utm_source=ig&utm_medium=social&utm_content=link_in_bio" 
+                target="_blank" 
+                rel="noopener noreferrer"
+                className="bg-white text-brand-700 hover:bg-zinc-50 px-8 py-4 rounded-full text-lg font-bold transition-all shadow-xl inline-block text-center"
+              >
                 Join now
-              </button>
+              </a>
             </div>
           </div>
         </div>
