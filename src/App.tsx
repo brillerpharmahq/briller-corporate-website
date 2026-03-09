@@ -337,9 +337,9 @@ const Testimonials = () => {
         <div className="grid md:grid-cols-3 gap-6">
           {[
             {
-              quote: "I've tried dozens of supplements, but Briller is the first one where I actually felt a difference within days. My afternoon slumps are completely gone.",
-              author: "Sarah J.",
-              role: "Verified Buyer"
+              quote: "Alhamdulillah, sudah terima Minyak Nur. Minyak ni bagus, ada kesan selepas guna. Batuk dan kahak berkurangan. Sebelum ni beli dekat FB, ni kali kedua beli di Shopee, bagaus minyak ni dan akan repeat lagi nanti. Terima kasih.",
+              author: "Sarah Ali.",
+              role: "Minyak Nur Aromaterapi buyer"
             },
             {
               quote: "The transparency in their sourcing is what won me over. The fact that it works so incredibly well for my focus and energy is a massive bonus.",
