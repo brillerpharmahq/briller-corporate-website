@@ -385,8 +385,8 @@ const CTA = () => {
     <section className="py-24 bg-white">
       <div className="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="bg-brand-600 rounded-[3rem] p-10 md:p-20 text-center relative overflow-hidden">
-          <div className="absolute top-0 right-0 -mt-20 -mr-20 w-80 h-80 bg-brand-500 rounded-full blur-3xl opacity-50"></div>
-          <div className="absolute bottom-0 left-0 -mb-20 -ml-20 w-80 h-80 bg-brand-700 rounded-full blur-3xl opacity-50"></div>
+          <div className="absolute top-0 right-0 -mt-20 -mr-20 w-80 h-80 bg-brand-500 rounded-full blur-3xl opacity-50 pointer-events-none"></div>
+          <div className="absolute bottom-0 left-0 -mb-20 -ml-20 w-80 h-80 bg-brand-700 rounded-full blur-3xl opacity-50 pointer-events-none"></div>
           
           <div className="relative z-10">
             <h2 className="text-4xl md:text-6xl font-bold text-white mb-6 font-serif">Ready to shine?</h2>
@@ -398,7 +398,7 @@ const CTA = () => {
                 href="https://linktr.ee/MinyakNur?utm_source=ig&utm_medium=social&utm_content=link_in_bio" 
                 target="_blank" 
                 rel="noopener noreferrer"
-                className="bg-white text-brand-700 hover:bg-zinc-50 px-8 py-4 rounded-full text-lg font-bold transition-all shadow-xl inline-block text-center"
+                className="bg-white text-brand-700 hover:bg-zinc-50 px-8 py-4 rounded-full text-lg font-bold transition-all shadow-xl inline-block text-center relative z-20 cursor-pointer"
               >
                 Join now
               </a>
