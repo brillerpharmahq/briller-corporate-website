@@ -1,5 +1,6 @@
-import React, { useState, useEffect } from 'react';
+import React, {useState, useEffect} from 'react';
 import { motion, AnimatePresence } from 'motion/react';
+import {Route, Routes, Link, useLocation} from 'react-router-dom';
 import { 
   Leaf, 
   ShieldCheck, 
@@ -20,9 +21,12 @@ import tmmHeroImg from './assets/images/tmm-hero.jpeg';
 import minyakProductImg from './assets/images/minyak-nur-product.jpg';
 import tmmProductImg from './assets/images/tmm-product.jpg';
 import aboutus from './assets/images/aboutus.jpg';
+
+import AboutPage from './pages/AboutPage';
 const Navbar = () => {
   const [isScrolled, setIsScrolled] = useState(false);
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
+  const location = useLocation();
 
   useEffect(() => {
     const handleScroll = () => {
@@ -32,29 +36,66 @@ const Navbar = () => {
     return () => window.removeEventListener('scroll', handleScroll);
   }, []);
 
+  const forceSolidNav = location.pathname !== '/';
+  const navIsSolid = forceSolidNav || isScrolled;
+
   return (
-    <header className={`fixed top-0 left-0 right-0 z-50 transition-all duration-300 ${isScrolled ? 'bg-white/80 backdrop-blur-md shadow-sm py-4' : 'bg-transparent py-6'}`}>
+    <header
+      className={`fixed top-0 left-0 right-0 z-50 transition-all duration-300 ${
+        navIsSolid ? 'bg-white/80 backdrop-blur-md shadow-sm py-4' : 'bg-transparent py-6'
+      }`}
+    >
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="flex justify-between items-center">
           <div className="flex items-center gap-2">
-            <img 
-              src={logoImg}
-              alt="Briller Logo" 
-              className="h-15 w-auto object-contain"
-            />
+            <Link to="/" aria-label="Go to homepage" className="inline-flex items-center">
+              <img
+                src={logoImg}
+                alt="Briller Logo"
+                className="h-15 w-auto object-contain"
+              />
+            </Link>
           </div>
           
           <nav className="hidden md:flex items-center gap-8">
-            <a href="#products" className={`text-sm font-medium transition-colors ${isScrolled ? 'text-zinc-900' : 'text-white'} hover:text-brand-600`}>Products</a>
-            <a href="#science" className={`text-sm font-medium transition-colors ${isScrolled ? 'text-zinc-900' : 'text-white'} hover:text-brand-600`}>Our Science</a>
-            <a href="#about" className={`text-sm font-medium transition-colors ${isScrolled ? 'text-zinc-900' : 'text-white'} hover:text-brand-600`}>About Us</a>
-            <a href="#testimonials" className={`text-sm font-medium transition-colors ${isScrolled ? 'text-zinc-900' : 'text-white'} hover:text-brand-600`}>Reviews</a>
+            <a
+              href="/#products"
+              className={`text-sm font-medium transition-colors ${
+                navIsSolid ? 'text-zinc-900' : 'text-white'
+              } hover:text-brand-600`}
+            >
+              Products
+            </a>
+            <a
+              href="/#science"
+              className={`text-sm font-medium transition-colors ${
+                navIsSolid ? 'text-zinc-900' : 'text-white'
+              } hover:text-brand-600`}
+            >
+              Our Science
+            </a>
+            <Link
+              to="/about"
+              className={`text-sm font-medium transition-colors ${
+                navIsSolid ? 'text-zinc-900' : 'text-white'
+              } hover:text-brand-600`}
+            >
+              About Us
+            </Link>
+            <a
+              href="/#testimonials"
+              className={`text-sm font-medium transition-colors ${
+                navIsSolid ? 'text-zinc-900' : 'text-white'
+              } hover:text-brand-600`}
+            >
+              Reviews
+            </a>
           </nav>
 
           
 
           <button 
-            className={`md:hidden p-2 ${isScrolled ? 'text-zinc-600' : 'text-white'}`}
+            className={`md:hidden p-2 ${navIsSolid ? 'text-zinc-600' : 'text-white'}`}
             onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
           >
             {mobileMenuOpen ? <X /> : <Menu />}
@@ -71,11 +112,29 @@ const Navbar = () => {
             exit={{ opacity: 0, y: -20 }}
             className="absolute top-full left-0 right-0 bg-white shadow-lg border-t border-zinc-100 p-4 md:hidden flex flex-col gap-4"
           >
-            <a href="#products" className="text-base font-medium text-zinc-800 p-2 hover:bg-zinc-50 rounded-lg" onClick={() => setMobileMenuOpen(false)}>Products</a>
-            <a href="#science" className="text-base font-medium text-zinc-800 p-2 hover:bg-zinc-50 rounded-lg" onClick={() => setMobileMenuOpen(false)}>Our Science</a>
-            <a href="#about" className="text-base font-medium text-zinc-800 p-2 hover:bg-zinc-50 rounded-lg" onClick={() => setMobileMenuOpen(false)}>About Us</a>
+            <a
+              href="/#products"
+              className="text-base font-medium text-zinc-800 p-2 hover:bg-zinc-50 rounded-lg"
+              onClick={() => setMobileMenuOpen(false)}
+            >
+              Products
+            </a>
+            <a
+              href="/#science"
+              className="text-base font-medium text-zinc-800 p-2 hover:bg-zinc-50 rounded-lg"
+              onClick={() => setMobileMenuOpen(false)}
+            >
+              Our Science
+            </a>
+            <Link
+              to="/about"
+              className="text-base font-medium text-zinc-800 p-2 hover:bg-zinc-50 rounded-lg"
+              onClick={() => setMobileMenuOpen(false)}
+            >
+              About Us
+            </Link>
             <div className="h-px bg-zinc-100 my-2"></div>
-            <button className="w-full bg-brand-600 text-white px-5 py-3 rounded-xl text-base font-medium">
+            <button className="w-full btn-wipe px-5 py-3 rounded-xl text-base font-medium">
               Shop Now
             </button>
           </motion.div>
@@ -88,6 +147,11 @@ const Navbar = () => {
 const Hero = () => {
   const [currentSlide, setCurrentSlide] = useState(0);
   const slides = [minyakHeroImg, tmmHeroImg];
+
+  const scrollToProducts = () => {
+    const el = document.getElementById('products');
+    if (el) el.scrollIntoView({ behavior: 'smooth', block: 'start' });
+  };
 
   useEffect(() => {
     const timer = setInterval(() => {
@@ -132,7 +196,11 @@ const Hero = () => {
             </p>
             
             <div className="flex flex-col sm:flex-row gap-4">
-              <button className="bg-white hover:bg-zinc-100 text-zinc-900 px-8 py-4 rounded-full text-base font-medium transition-all hover:shadow-xl hover:-translate-y-0.5 flex items-center justify-center gap-2">
+              <button
+                type="button"
+                onClick={scrollToProducts}
+                className="bg-white hover:bg-zinc-100 text-zinc-900 px-8 py-4 rounded-full text-base font-medium transition-all hover:shadow-xl hover:-translate-y-0.5 flex items-center justify-center gap-2"
+              >
                 Explore Products <ArrowRight className="w-4 h-4" />
               </button>
               
@@ -149,14 +217,35 @@ const ProductSection = () => {
     {
       name: "Minyak Nur Aromaterapi",
       image: minyakProductImg,
-      description: "Minyak Nur Aromatherapy is a herbal oil specially formulated to help relieve cough, joint pain, and wind-related discomfort. It is made from 23 natural forest herbs and has been laboratory tested for quality and safety."
+      description:
+        "Minyak Nur Aromatherapy is a herbal oil specially formulated to help relieve cough, joint pain, and wind-related discomfort. It is made from 23 natural forest herbs and has been laboratory tested for quality and safety.",
+      // You can edit this extra text any time
+      moreInfo:
+        "Here you can add more detailed information about Minyak Nur Aromaterapi, recommended usage, ingredients list, and any supporting explanations you want customers to read.",
     },
     {
       name: "ImmunoTiger",
       image: tmmProductImg,
-      description: "ImmunoTiger is a health product specifically developed to support lung health. It is formulated using Tiger Milk Mushroom and Black Seed (Habbatus Sauda), developed by a herbal doctor from Universiti Putra Malaysia. The ingredients used are supported by clinical research to evaluate their effectiveness."
-    }
+      description:
+        "ImmunoTiger is a health product specifically developed to support lung health. It is formulated using Tiger Milk Mushroom and Black Seed (Habbatus Sauda), developed by a herbal doctor from Universiti Putra Malaysia. The ingredients used are supported by clinical research to evaluate their effectiveness.",
+      // You can edit this extra text any time
+      moreInfo:
+        "Here you can add more detailed information about ImmunoTiger, clinical backing, dosage guidance, and benefits for different types of customers.",
+    },
   ];
+
+  const [selectedProduct, setSelectedProduct] = useState<(typeof products)[number] | null>(null);
+  const [isModalOpen, setIsModalOpen] = useState(false);
+
+  const openModal = (product: (typeof products)[number]) => {
+    setSelectedProduct(product);
+    setIsModalOpen(true);
+  };
+
+  const closeModal = () => {
+    setIsModalOpen(false);
+    setSelectedProduct(null);
+  };
 
   return (
     <section id="products" className="py-24 bg-white">
@@ -195,14 +284,74 @@ const ProductSection = () => {
                   {product.description}
                 </p>
                 <div className="pt-4">
-                  <button className="bg-zinc-900 hover:bg-zinc-800 text-white px-8 py-3 rounded-full font-medium transition-all hover:shadow-lg">
-                    Learn More
+                  <button
+                    type="button"
+                    onClick={() => openModal(product)}
+                    className="btn-wipe px-8 py-3 font-semibold"
+                  >
+                    <span>Learn More</span> <ArrowRight className="w-4 h-4" />
                   </button>
                 </div>
               </div>
             </motion.div>
           ))}
         </div>
+        <AnimatePresence>
+          {isModalOpen && selectedProduct && (
+            <motion.div
+              key="product-modal-backdrop"
+              className="fixed inset-0 z-50 flex items-center justify-center bg-black/60 px-4"
+              initial={{ opacity: 0 }}
+              animate={{ opacity: 1 }}
+              exit={{ opacity: 0 }}
+              onClick={closeModal}
+            >
+              <motion.div
+                key="product-modal-panel"
+                className="bg-white rounded-3xl max-w-3xl w-full p-6 md:p-8 relative"
+                initial={{ opacity: 0, y: 12, scale: 0.98 }}
+                animate={{ opacity: 1, y: 0, scale: 1 }}
+                exit={{ opacity: 0, y: 12, scale: 0.98 }}
+                transition={{ duration: 0.25, ease: 'easeOut' }}
+                onClick={(e) => e.stopPropagation()}
+              >
+                <button
+                  type="button"
+                  onClick={closeModal}
+                  className="absolute top-4 right-4 text-zinc-500 hover:text-zinc-800 text-2xl leading-none"
+                  aria-label="Close"
+                >
+                  ×
+                </button>
+                <div className="grid md:grid-cols-2 gap-6 items-start">
+                  <div className="space-y-4">
+                    <h3 className="text-2xl md:text-3xl font-bold text-zinc-900 font-serif">
+                      {selectedProduct.name}
+                    </h3>
+                    <p className="text-zinc-600 font-sans leading-relaxed">
+                      {selectedProduct.moreInfo}
+                    </p>
+                    <p className="text-sm text-zinc-500 font-sans">
+                      You can replace this text with details about certificates, approvals, or lab
+                      reports for this product.
+                    </p>
+                  </div>
+                  <div className="space-y-4">
+                    <img
+                      src={selectedProduct.image}
+                      alt={selectedProduct.name}
+                      className="w-full h-64 md:h-72 rounded-2xl object-cover shadow-lg"
+                    />
+                    <div className="border border-dashed border-zinc-300 rounded-2xl p-3 text-center text-sm text-zinc-500 font-sans">
+                      Certificate image area – you can later swap this to a specific certificate
+                      photo for each product.
+                    </div>
+                  </div>
+                </div>
+              </motion.div>
+            </motion.div>
+          )}
+        </AnimatePresence>
       </div>
     </section>
   );
@@ -320,6 +469,39 @@ const AboutUs = () => {
             />
           </motion.div>
         </div>
+
+        {/* OUR AMBASSADOR */}
+        <div className="mt-20">
+          <div className="flex flex-col lg:flex-row items-center gap-10">
+            <div className="w-full lg:w-5/12">
+              <div className="relative">
+                <div className="absolute inset-0 bg-brand-50 rounded-[2.5rem] transform rotate-2 -z-10"></div>
+                <img
+                  src={aboutus}
+                  alt="Our Ambassador"
+                  className="w-full aspect-[4/5] rounded-[2.5rem] object-cover shadow-xl"
+                />
+              </div>
+            </div>
+            <div className="w-full lg:w-7/12">
+              <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-brand-50 border border-brand-100 text-brand-700 text-sm font-semibold mb-5">
+                OUR AMBASSADOR
+              </div>
+              <h3 className="text-3xl md:text-4xl font-bold text-zinc-900 font-serif mb-4">
+                Ambassador Name
+              </h3>
+              <p className="text-lg text-zinc-600 font-sans leading-relaxed mb-6">
+                Add a short introduction about your ambassador here — why you chose them, their
+                story, and how they align with Briller’s mission.
+              </p>
+              <div className="flex flex-col sm:flex-row gap-4">
+                <Link to="/about" className="btn-wipe px-8 py-3 font-semibold">
+                  <span>Explore our team</span> <ArrowRight className="w-4 h-4" />
+                </Link>
+              </div>
+            </div>
+          </div>
+        </div>
       </div>
     </section>
   );
@@ -398,7 +580,7 @@ const CTA = () => {
                 href="https://linktr.ee/MinyakNur?utm_source=ig&utm_medium=social&utm_content=link_in_bio" 
                 target="_blank" 
                 rel="noopener noreferrer"
-                className="bg-white text-brand-700 hover:bg-zinc-50 px-8 py-4 rounded-full text-lg font-bold transition-all shadow-xl inline-block text-center relative z-20 cursor-pointer"
+                className="bg-white text-brand-700 px-8 py-4 rounded-full text-lg font-bold shadow-xl inline-block text-center relative z-20 cursor-pointer btn-float"
               >
                 Join now
               </a>
@@ -469,18 +651,27 @@ const Footer = () => {
   );
 };
 
+const HomePage = () => {
+  return (
+    <main>
+      <Hero />
+      <ProductSection />
+      <Features />
+      <AboutUs />
+      <Testimonials />
+      <CTA />
+    </main>
+  );
+};
+
 export default function App() {
   return (
     <div className="min-h-screen bg-white selection:bg-brand-200 selection:text-brand-900">
       <Navbar />
-      <main>
-        <Hero />
-        <ProductSection />
-        <Features />
-        <AboutUs />
-        <Testimonials />
-        <CTA />
-      </main>
+      <Routes>
+        <Route path="/" element={<HomePage />} />
+        <Route path="/about" element={<AboutPage />} />
+      </Routes>
       <Footer />
     </div>
   );

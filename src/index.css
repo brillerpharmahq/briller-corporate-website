@@ -23,6 +23,65 @@ body {
   color: #18181b;
 }
 
+html {
+  scroll-behavior: smooth;
+}
+
 h1, h2, h3, h4, h5, h6 {
   font-family: var(--font-serif);
+}
+
+/* Button hover wipe: black → brand green */
+.btn-wipe {
+  position: relative;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.5rem;
+  overflow: hidden;
+  border-radius: 9999px;
+  background: #18181b; /* zinc-900 */
+  color: white;
+  transition: box-shadow 200ms ease, transform 200ms ease;
+}
+
+.btn-wipe::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background: var(--color-brand-600);
+  transform: translateX(-100%);
+  transition: transform 240ms ease;
+}
+
+.btn-wipe > * {
+  position: relative;
+  z-index: 1;
+}
+
+.btn-wipe:hover::before {
+  transform: translateX(0);
+}
+
+.btn-wipe:hover {
+  box-shadow: 0 16px 30px rgba(24, 24, 27, 0.18);
+  transform: translateY(-1px);
+}
+
+.btn-wipe:active {
+  transform: translateY(0);
+}
+
+/* Button hover: no color change, just lift */
+.btn-float {
+  transition: box-shadow 200ms ease, transform 200ms ease;
+}
+
+.btn-float:hover {
+  transform: translateY(-1px);
+  box-shadow: 0 16px 30px rgba(24, 24, 27, 0.18);
+}
+
+.btn-float:active {
+  transform: translateY(0);
 }
