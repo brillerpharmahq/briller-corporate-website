@@ -22,6 +22,8 @@ import tmmProductImg from './assets/images/tmm-product.jpg';
 import aboutus from './assets/images/aboutus.jpg';
 import ourAmbassadorImg from './assets/images/ourambassador.jpg';
 import ourambassador from './assets/images/IM_Hassan.jpg';
+import cert1 from './assets/images/cert1.jpg';
+import cert2 from './assets/images/cert2.jpg';
 const Navbar = () => {
   const [isScrolled, setIsScrolled] = useState(false);
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
@@ -216,7 +218,12 @@ const ProductSection = () => {
         "Minyak Nur Aromatherapy is a herbal oil specially formulated to help relieve cough, joint pain, and wind-related discomfort. It is made from 23 natural forest herbs and has been laboratory tested for quality and safety.",
       // You can edit this extra text any time
       moreInfo:
-        "Here you can add more detailed information about Minyak Nur Aromaterapi, recommended usage, ingredients list, and any supporting explanations you want customers to read.",
+        "Minyak Nur Aromatherapy is a herbal oil specially formulated to help relieve cough, joint pain, and wind-related discomfort. It is made from 23 natural forest herbs and has been laboratory tested for quality and safety.",
+      labTestImage: null as string | null,
+      certificates: [
+        {subtitle: 'Microbiology Tested', image: cert1 as string},
+        {subtitle: 'Heavy Metal Tested', image: cert2 as string},
+      ],
     },
     {
       name: "ImmunoTiger",
@@ -225,12 +232,15 @@ const ProductSection = () => {
         "ImmunoTiger is a health product specifically developed to support lung health. It is formulated using Tiger Milk Mushroom and Black Seed (Habbatus Sauda), developed by a herbal doctor from Universiti Putra Malaysia. The ingredients used are supported by clinical research to evaluate their effectiveness.",
       // You can edit this extra text any time
       moreInfo:
-        "Here you can add more detailed information about ImmunoTiger, clinical backing, dosage guidance, and benefits for different types of customers.",
+        "ImmunoTiger is a health product specifically developed to support lung health. It is formulated using Tiger Milk Mushroom and Black Seed (Habbatus Sauda), developed by a herbal doctor from Universiti Putra Malaysia. The ingredients used are supported by clinical research to evaluate their effectiveness.",
     },
   ];
 
   const [selectedProduct, setSelectedProduct] = useState<(typeof products)[number] | null>(null);
   const [isModalOpen, setIsModalOpen] = useState(false);
+  const [isLabTestOpen, setIsLabTestOpen] = useState(false);
+  const [lightboxImageSrc, setLightboxImageSrc] = useState<string | null>(null);
+  const [lightboxAlt, setLightboxAlt] = useState<string>('');
 
   const openModal = (product: (typeof products)[number]) => {
     setSelectedProduct(product);
@@ -240,6 +250,8 @@ const ProductSection = () => {
   const closeModal = () => {
     setIsModalOpen(false);
     setSelectedProduct(null);
+    setIsLabTestOpen(false);
+    setLightboxImageSrc(null);
   };
 
   return (
@@ -326,10 +338,6 @@ const ProductSection = () => {
                     <p className="text-zinc-600 font-sans leading-relaxed">
                       {selectedProduct.moreInfo}
                     </p>
-                    <p className="text-sm text-zinc-500 font-sans">
-                      You can replace this text with details about certificates, approvals, or lab
-                      reports for this product.
-                    </p>
                   </div>
                   <div className="space-y-4">
                     <img
@@ -337,15 +345,135 @@ const ProductSection = () => {
                       alt={selectedProduct.name}
                       className="w-full h-64 md:h-72 rounded-2xl object-cover shadow-lg"
                     />
-                    <div className="border border-dashed border-zinc-300 rounded-2xl p-3 text-center text-sm text-zinc-500 font-sans">
-                      Certificate image area – you can later swap this to a specific certificate
-                      photo for each product.
-                    </div>
+                    {'labTestImage' in selectedProduct && (selectedProduct as any).labTestImage ? (
+                      <button
+                        type="button"
+                        onClick={() => setIsLabTestOpen(true)}
+                        className="block w-full text-left"
+                        aria-label="Open lab test image"
+                      >
+                        <img
+                          src={(selectedProduct as any).labTestImage}
+                          alt={`${selectedProduct.name} lab test`}
+                          className="w-full h-64 md:h-72 rounded-2xl object-cover shadow-lg border border-zinc-200 cursor-zoom-in"
+                        />
+                      </button>
+                    ) : null}
+
+                    {'certificates' in selectedProduct && Array.isArray((selectedProduct as any).certificates) ? (
+                      <div className="grid grid-cols-2 gap-3">
+                        {(selectedProduct as any).certificates.map(
+                          (c: {subtitle?: string; image: string}, i: number) => (
+                          <button
+                            key={`${selectedProduct.name}-cert-${i}`}
+                            type="button"
+                            onClick={() => {
+                              setLightboxAlt(c.subtitle || `${selectedProduct.name} certificate ${i + 1}`);
+                              setLightboxImageSrc(c.image);
+                            }}
+                            className="block w-full text-left group"
+                            aria-label={`Open ${c.subtitle || `${selectedProduct.name} certificate ${i + 1}`}`}
+                          >
+                            <div className="rounded-2xl border border-zinc-200 overflow-hidden bg-white shadow-sm group-hover:shadow-md transition-shadow">
+                              <img
+                                src={c.image}
+                                alt={c.subtitle || `${selectedProduct.name} certificate ${i + 1}`}
+                                className="w-full h-28 object-cover cursor-zoom-in transition-transform duration-200 group-hover:scale-[1.02]"
+                              />
+                            </div>
+                            <div className="mt-2 text-xs font-semibold text-zinc-700 font-sans flex items-center gap-1">
+                              <span className="inline-block w-1.5 h-1.5 rounded-full bg-brand-600"></span>
+                              <span>{c.subtitle || `Certificate ${i + 1}`}</span>
+                            </div>
+                          </button>
+                        ))}
+                      </div>
+                    ) : null}
                   </div>
                 </div>
               </motion.div>
             </motion.div>
           )}
+        </AnimatePresence>
+
+        {/* Lab test full-screen view */}
+        <AnimatePresence>
+          {isModalOpen &&
+          selectedProduct &&
+          isLabTestOpen &&
+          'labTestImage' in selectedProduct &&
+          (selectedProduct as any).labTestImage ? (
+            <motion.div
+              key="labtest-lightbox"
+              className="fixed inset-0 z-[60] bg-black/80 flex items-center justify-center px-4"
+              initial={{opacity: 0}}
+              animate={{opacity: 1}}
+              exit={{opacity: 0}}
+              onClick={() => setIsLabTestOpen(false)}
+            >
+              <motion.div
+                key="labtest-lightbox-panel"
+                className="relative w-full max-w-5xl"
+                initial={{opacity: 0, scale: 0.98}}
+                animate={{opacity: 1, scale: 1}}
+                exit={{opacity: 0, scale: 0.98}}
+                transition={{duration: 0.2, ease: 'easeOut'}}
+                onClick={(e) => e.stopPropagation()}
+              >
+                <button
+                  type="button"
+                  onClick={() => setIsLabTestOpen(false)}
+                  className="absolute -top-12 right-0 text-white/90 hover:text-white text-3xl leading-none"
+                  aria-label="Close lab test image"
+                >
+                  ×
+                </button>
+                <img
+                  src={(selectedProduct as any).labTestImage}
+                  alt={`${selectedProduct.name} lab test full view`}
+                  className="w-full max-h-[85vh] object-contain rounded-2xl shadow-2xl bg-black"
+                />
+              </motion.div>
+            </motion.div>
+          ) : null}
+        </AnimatePresence>
+
+        {/* Certificate full-screen view */}
+        <AnimatePresence>
+          {isModalOpen && selectedProduct && lightboxImageSrc ? (
+            <motion.div
+              key="cert-lightbox"
+              className="fixed inset-0 z-[60] bg-black/80 flex items-center justify-center px-4"
+              initial={{opacity: 0}}
+              animate={{opacity: 1}}
+              exit={{opacity: 0}}
+              onClick={() => setLightboxImageSrc(null)}
+            >
+              <motion.div
+                key="cert-lightbox-panel"
+                className="relative w-full max-w-5xl"
+                initial={{opacity: 0, scale: 0.98}}
+                animate={{opacity: 1, scale: 1}}
+                exit={{opacity: 0, scale: 0.98}}
+                transition={{duration: 0.2, ease: 'easeOut'}}
+                onClick={(e) => e.stopPropagation()}
+              >
+                <button
+                  type="button"
+                  onClick={() => setLightboxImageSrc(null)}
+                  className="absolute -top-12 right-0 text-white/90 hover:text-white text-3xl leading-none"
+                  aria-label="Close image"
+                >
+                  ×
+                </button>
+                <img
+                  src={lightboxImageSrc}
+                  alt={lightboxAlt || 'Certificate image'}
+                  className="w-full max-h-[85vh] object-contain rounded-2xl shadow-2xl bg-black"
+                />
+              </motion.div>
+            </motion.div>
+          ) : null}
         </AnimatePresence>
       </div>
     </section>
