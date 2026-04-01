@@ -1,6 +1,5 @@
 import React, {useState, useEffect} from 'react';
 import { motion, AnimatePresence } from 'motion/react';
-import {Route, Routes, Link, useLocation} from 'react-router-dom';
 import { 
   Leaf, 
   ShieldCheck, 
@@ -21,12 +20,11 @@ import tmmHeroImg from './assets/images/tmm-hero.jpeg';
 import minyakProductImg from './assets/images/minyak-nur-product.jpg';
 import tmmProductImg from './assets/images/tmm-product.jpg';
 import aboutus from './assets/images/aboutus.jpg';
-
-import AboutPage from './pages/AboutPage';
+import ourAmbassadorImg from './assets/images/ourambassador.jpg';
+import ourambassador from './assets/images/IM_Hassan.jpg';
 const Navbar = () => {
   const [isScrolled, setIsScrolled] = useState(false);
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
-  const location = useLocation();
 
   useEffect(() => {
     const handleScroll = () => {
@@ -36,56 +34,53 @@ const Navbar = () => {
     return () => window.removeEventListener('scroll', handleScroll);
   }, []);
 
-  const forceSolidNav = location.pathname !== '/';
-  const navIsSolid = forceSolidNav || isScrolled;
-
   return (
     <header
       className={`fixed top-0 left-0 right-0 z-50 transition-all duration-300 ${
-        navIsSolid ? 'bg-white/80 backdrop-blur-md shadow-sm py-4' : 'bg-transparent py-6'
+        isScrolled ? 'bg-white/80 backdrop-blur-md shadow-sm py-4' : 'bg-transparent py-6'
       }`}
     >
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="flex justify-between items-center">
           <div className="flex items-center gap-2">
-            <Link to="/" aria-label="Go to homepage" className="inline-flex items-center">
+            <a href="/" aria-label="Go to homepage" className="inline-flex items-center">
               <img
                 src={logoImg}
                 alt="Briller Logo"
                 className="h-15 w-auto object-contain"
               />
-            </Link>
+            </a>
           </div>
           
           <nav className="hidden md:flex items-center gap-8">
             <a
-              href="/#products"
+              href="#products"
               className={`text-sm font-medium transition-colors ${
-                navIsSolid ? 'text-zinc-900' : 'text-white'
+                isScrolled ? 'text-zinc-900' : 'text-white'
               } hover:text-brand-600`}
             >
               Products
             </a>
             <a
-              href="/#science"
+              href="#science"
               className={`text-sm font-medium transition-colors ${
-                navIsSolid ? 'text-zinc-900' : 'text-white'
+                isScrolled ? 'text-zinc-900' : 'text-white'
               } hover:text-brand-600`}
             >
               Our Science
             </a>
-            <Link
-              to="/about"
+            <a
+              href="#about"
               className={`text-sm font-medium transition-colors ${
-                navIsSolid ? 'text-zinc-900' : 'text-white'
+                isScrolled ? 'text-zinc-900' : 'text-white'
               } hover:text-brand-600`}
             >
               About Us
-            </Link>
+            </a>
             <a
-              href="/#testimonials"
+              href="#testimonials"
               className={`text-sm font-medium transition-colors ${
-                navIsSolid ? 'text-zinc-900' : 'text-white'
+                isScrolled ? 'text-zinc-900' : 'text-white'
               } hover:text-brand-600`}
             >
               Reviews
@@ -95,7 +90,7 @@ const Navbar = () => {
           
 
           <button 
-            className={`md:hidden p-2 ${navIsSolid ? 'text-zinc-600' : 'text-white'}`}
+            className={`md:hidden p-2 ${isScrolled ? 'text-zinc-600' : 'text-white'}`}
             onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
           >
             {mobileMenuOpen ? <X /> : <Menu />}
@@ -113,26 +108,26 @@ const Navbar = () => {
             className="absolute top-full left-0 right-0 bg-white shadow-lg border-t border-zinc-100 p-4 md:hidden flex flex-col gap-4"
           >
             <a
-              href="/#products"
+              href="#products"
               className="text-base font-medium text-zinc-800 p-2 hover:bg-zinc-50 rounded-lg"
               onClick={() => setMobileMenuOpen(false)}
             >
               Products
             </a>
             <a
-              href="/#science"
+              href="#science"
               className="text-base font-medium text-zinc-800 p-2 hover:bg-zinc-50 rounded-lg"
               onClick={() => setMobileMenuOpen(false)}
             >
               Our Science
             </a>
-            <Link
-              to="/about"
+            <a
+              href="#about"
               className="text-base font-medium text-zinc-800 p-2 hover:bg-zinc-50 rounded-lg"
               onClick={() => setMobileMenuOpen(false)}
             >
               About Us
-            </Link>
+            </a>
             <div className="h-px bg-zinc-100 my-2"></div>
             <button className="w-full btn-wipe px-5 py-3 rounded-xl text-base font-medium">
               Shop Now
@@ -477,7 +472,7 @@ const AboutUs = () => {
               <div className="relative">
                 <div className="absolute inset-0 bg-brand-50 rounded-[2.5rem] transform rotate-2 -z-10"></div>
                 <img
-                  src={aboutus}
+                  src={ourAmbassadorImg}
                   alt="Our Ambassador"
                   className="w-full aspect-[4/5] rounded-[2.5rem] object-cover shadow-xl"
                 />
@@ -488,16 +483,16 @@ const AboutUs = () => {
                 OUR AMBASSADOR
               </div>
               <h3 className="text-3xl md:text-4xl font-bold text-zinc-900 font-serif mb-4">
-                Ambassador Name
+                Imam Muda Hassan
               </h3>
               <p className="text-lg text-zinc-600 font-sans leading-relaxed mb-6">
-                Add a short introduction about your ambassador here — why you chose them, their
-                story, and how they align with Briller’s mission.
+                Imam Muda Hassan (Hassan Adli) is a Malaysian Islamic preacher and television personality, best known as the champion of the second season of the reality show Imam Muda in 2011. He was chosen for his balanced knowledge of Shariah, Quranic recitation (tahfiz), and modern leadership skills, aimed at promoting progressive dakwah. 
+
               </p>
               <div className="flex flex-col sm:flex-row gap-4">
-                <Link to="/about" className="btn-wipe px-8 py-3 font-semibold">
+                <a href="#about" className="btn-wipe px-8 py-3 font-semibold">
                   <span>Explore our team</span> <ArrowRight className="w-4 h-4" />
-                </Link>
+                </a>
               </div>
             </div>
           </div>
@@ -627,16 +622,6 @@ const Footer = () => {
               <li><a href="#" className="hover:text-brand-600 transition-colors">Careers</a></li>
             </ul>
           </div>
-          
-          <div>
-            <h4 className="font-bold text-zinc-900 mb-4">Support</h4>
-            <ul className="space-y-3 text-zinc-500 font-sans">
-              <li><a href="#" className="hover:text-brand-600 transition-colors">FAQ</a></li>
-              <li><a href="#" className="hover:text-brand-600 transition-colors">Shipping</a></li>
-              <li><a href="#" className="hover:text-brand-600 transition-colors">Returns</a></li>
-              <li><a href="#" className="hover:text-brand-600 transition-colors">Contact Us</a></li>
-            </ul>
-          </div>
         </div>
         
         <div className="pt-8 border-t border-zinc-200 flex flex-col md:flex-row justify-between items-center gap-4 text-sm text-zinc-400 font-sans">
@@ -651,27 +636,18 @@ const Footer = () => {
   );
 };
 
-const HomePage = () => {
-  return (
-    <main>
-      <Hero />
-      <ProductSection />
-      <Features />
-      <AboutUs />
-      <Testimonials />
-      <CTA />
-    </main>
-  );
-};
-
 export default function App() {
   return (
     <div className="min-h-screen bg-white selection:bg-brand-200 selection:text-brand-900">
       <Navbar />
-      <Routes>
-        <Route path="/" element={<HomePage />} />
-        <Route path="/about" element={<AboutPage />} />
-      </Routes>
+      <main>
+        <Hero />
+        <ProductSection />
+        <Features />
+        <AboutUs />
+        <Testimonials />
+        <CTA />
+      </main>
       <Footer />
     </div>
   );
